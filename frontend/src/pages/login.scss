@@ -1,0 +1,639 @@
+// styles/login.scss
+
+// Variables
+$primary-color: #667eea;
+$secondary-color: #764ba2;
+$accent-color: #f093fb;
+$error-color: #ff6b6b;
+$success-color: #51cf66;
+$warning-color: #ffd43b;
+
+$bg-primary: #f8f9fa;
+$bg-secondary: #ffffff;
+$bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$bg-sidebar: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+$text-primary: #2d3748;
+$text-secondary: #4a5568;
+$text-muted: #718096;
+$text-light: #ffffff;
+
+$border-radius: 12px;
+$border-radius-lg: 20px;
+$border-radius-sm: 8px;
+
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 8px 25px rgba(0, 0, 0, 0.15);
+$shadow-lg: 0 15px 35px rgba(0, 0, 0, 0.2);
+
+$transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Mixins
+@mixin gradient-text {
+  background: $bg-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin gradient-bg {
+  background: $bg-gradient;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Global Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: $bg-primary;
+  color: $text-primary;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+// Main Layout Container - UPDATED: No white space
+.auth-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr; // ✅ Left side wider
+  width: 100vw; // ✅ Full viewport width
+  margin: 10px; // ✅ Remove any margins
+  padding: 20px; // ✅ Remove any padding
+  margin-top: -40px;
+  
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Left Side - Brand/Info Section - UPDATED: No white space
+.auth-brand {
+  background: $bg-sidebar;
+  color: $text-light;
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  width: 100%; // ✅ Full width
+  
+  @include flex-center;
+  flex-direction: column;
+  text-align: center;
+  
+  @media (max-width: 968px) {
+    display: none;
+    min-height: auto;
+    padding: 2rem;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+    background-size: cover;
+  }
+}
+
+.brand-content {
+  position: relative;
+  z-index: 2;
+  max-width: 480px;
+  width: 100%;
+}
+
+.brand-logo {
+  @include flex-center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  font-size: 1.8rem;
+}
+
+.brand-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+// UPDATED: Features in proper columns
+.brand-features {
+  display: grid;
+  grid-template-columns: 1fr; // ✅ Single column
+  gap: 1rem;
+  margin-top: 2rem;
+  text-align: left;
+  
+  .feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: $border-radius-sm;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    
+    i {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.125rem;
+      flex-shrink: 0;
+    }
+    
+    .feature-text {
+      flex: 1;
+      
+      .feature-title {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+      }
+      
+      .feature-desc {
+        font-size: 0.85rem;
+        opacity: 0.8;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Right Side - Auth Form Section - UPDATED: No white space
+.auth-form-section {
+  @include flex-center;
+  padding: 1.5rem;
+  background: $bg-primary;
+  min-height: 100vh;
+  width: 100%; // ✅ Full width
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+}
+
+.auth-form-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto; // ✅ Center the form
+}
+
+// Form Card - UPDATED: Compact design
+.auth-card {
+  background: $bg-secondary;
+  border-radius: $border-radius-lg;
+  padding: 2rem;
+  box-shadow: $shadow-md;
+  transition: $transition;
+  width: 100%; // ✅ Full width
+  
+  &:hover {
+    box-shadow: $shadow-lg;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
+    border-radius: $border-radius;
+  }
+}
+
+// Header - UPDATED: Compact
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  .auth-icon {
+    @include flex-center;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    @include gradient-bg;
+    color: $text-light;
+    font-size: 1.4rem;
+    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
+  }
+  
+  .auth-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    @include gradient-text;
+  }
+  
+  .auth-subtitle {
+    color: $text-muted;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+}
+
+// Messages
+.auth-message {
+  padding: 0.875rem 1rem;
+  border-radius: $border-radius-sm;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  
+  &.error-message {
+    background-color: rgba($error-color, 0.1);
+    color: darken($error-color, 20%);
+    border-left: 4px solid $error-color;
+    
+    .close-error {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: inherit;
+      transition: $transition;
+      padding: 0.25rem;
+      border-radius: 4px;
+      
+      &:hover {
+        background: rgba($error-color, 0.1);
+      }
+    }
+  }
+  
+  &.success-message {
+    background-color: rgba($success-color, 0.1);
+    color: darken($success-color, 25%);
+    border-left: 4px solid $success-color;
+  }
+}
+
+// Form Styles - UPDATED: Better spacing
+.auth-form {
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  .form-label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: $text-primary;
+    font-size: 0.9rem;
+    
+    i {
+      margin-right: 0.5rem;
+      color: $primary-color;
+      width: 14px;
+    }
+    
+    .char-count {
+      margin-left: auto;
+      font-size: 0.7rem;
+      color: $text-muted;
+    }
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: $border-radius-sm;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: $transition;
+    background: $bg-secondary;
+    
+    &::placeholder {
+      color: #a0aec0;
+      font-weight: 400;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    &:disabled {
+      background-color: #f7fafc;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+  
+  .form-options {
+    @include flex-between;
+    margin-bottom: 1.5rem;
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      
+      .checkbox {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #cbd5e0;
+        border-radius: 4px;
+        position: relative;
+        transition: $transition;
+        
+        &.checked {
+          border-color: $primary-color;
+          background: $primary-color;
+          
+          &::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+          }
+        }
+      }
+      
+      .checkbox-label {
+        color: $text-muted;
+        font-size: 0.85rem;
+      }
+    }
+    
+    .forgot-password {
+      background: none;
+      border: none;
+      color: $primary-color;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: $transition;
+      
+      &:hover:not(:disabled) {
+        color: darken($primary-color, 15%);
+        text-decoration: underline;
+      }
+      
+      &:disabled {
+        color: $text-muted;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .auth-submit-btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    @include gradient-bg;
+    border: none;
+    border-radius: $border-radius-sm;
+    color: $text-light;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: $transition;
+    @include flex-center;
+    gap: 0.75rem;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+}
+
+// Switch Mode
+.auth-switch {
+  text-align: center;
+  margin: 1.5rem 0;
+  color: $text-muted;
+  font-size: 0.9rem;
+  
+  .switch-mode-btn {
+    background: none;
+    border: none;
+    color: $primary-color;
+    font-weight: 700;
+    cursor: pointer;
+    transition: $transition;
+    
+    &:hover:not(:disabled) {
+      color: darken($primary-color, 15%);
+      text-decoration: underline;
+    }
+    
+    &:disabled {
+      color: $text-muted;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Divider
+.auth-divider {
+  position: relative;
+  text-align: center;
+  margin: 1.5rem 0;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e2e8f0;
+  }
+  
+  span {
+    position: relative;
+    padding: 0 1rem;
+    background: $bg-secondary;
+    color: $text-muted;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+// Social Auth
+.social-auth {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem;
+  
+  .social-btn {
+    padding: 0.875rem 1.25rem;
+    border: 2px solid #e2e8f0;
+    border-radius: $border-radius-sm;
+    background: $bg-secondary;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+    @include flex-center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: $primary-color;
+      color: $primary-color;
+      box-shadow: $shadow-sm;
+    }
+    
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    &.google-btn:hover {
+      border-color: #DB4437;
+      color: #DB4437;
+    }
+  }
+}
+
+// Footer
+.auth-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  color: $text-muted;
+  font-size: 0.8rem;
+}
+
+// Loading Animation
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+// Mobile Navigation
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  
+  @media (max-width: 968px) {
+    display: block;
+  }
+  
+  .nav-toggle {
+    background: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    @include flex-center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    box-shadow: $shadow-md;
+    transition: $transition;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Utility Classes
+.text-gradient {
+  @include gradient-text;
+}
+
+.hidden-mobile {
+  @media (max-width: 968px) {
+    display: none;
+  }
+}
+
+.visible-mobile {
+  display: none;
+  
+  @media (max-width: 968px) {
+    display: block;
+  }
+}
+
+// Additional responsive fixes
+@media (max-width: 1200px) {
+  .auth-layout {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+@media (max-width: 968px) {
+  .auth-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .auth-brand {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-section {
+    padding: 0.5rem;
+  }
+  
+  .auth-card {
+    border-radius: $border-radius;
+    box-shadow: $shadow-sm;
+  }
+}

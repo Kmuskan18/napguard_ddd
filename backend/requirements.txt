@@ -1,0 +1,10 @@
+flask
+flask-cors
+opencv-python
+dlib
+numpy
+scipy
+flask-socketio
+eventlet
+python-socketio
+engineio
